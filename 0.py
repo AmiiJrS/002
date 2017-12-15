@@ -32,13 +32,13 @@ import cStringIO
 import urlparse
 import logging
 import argparse
-#import mimic
+import mimic
 import xml
 import base64
 import ast
 
 cl = LINETCR.LINE()
-cl.login(token="Enrhgvw5Q6BHqQa9SYb5.EoxV+4w+LZK8WSs47pK9jq./1lv9NVFrchDTO7FYL3jP0QtfiFS+uZh6BF8YB0Odn4=")
+cl.login(token="EnQ10LKbH3ERO4UUBZB5.EoxV+4w+LZK8WSs47pK9jq.MbuqjTozPVtraUmZ2GpPPr1Xl6bufKSgBpY6UQmyDz0=")
 cl.loginResult()
 
 kt = LINETCR.LINE()
@@ -57,7 +57,9 @@ kk = LINETCR.LINE()
 kk.login(token="Enl1jbYrxWNv5PDoQX74.MxZq5+cyaO1D5fsiaOaLra.f64MBlb40jybISZjXIT6o2tsNNXKV/OqYj0LIrj89fI=")
 kk.loginResult()
 
-kc = kk
+kc = LINETCR.LINE()
+kc.login(token="EnUTop1vscJ7wLPCTzGb.aqwg64auJuMcoXkIFKpmQW.M9BMEkbV1AIeuUY+Kfv8zhUmnFjAcU41ANoTBlkFfV4=")
+kc.loginResult()
 
 print "Amii"
 reload(sys)
@@ -4269,8 +4271,8 @@ def bot(op):
 					time.sleep(0.0001)
 					ks.acceptGroupInvitationByTicket(msg.to,Ticket)
 					time.sleep(0.0001)
-#                                        kt.acceptGroupInvitationByTicket(msg.to,Ticket)
-#                                        time.sleep(0.0001)
+                                        kc.acceptGroupInvitationByTicket(msg.to,Ticket)
+                                        time.sleep(0.0001)
 					G = cl.getGroup(msg.to)
 					G.preventJoinByTicket = True
 					cl.updateGroup(G)
@@ -4302,7 +4304,7 @@ def bot(op):
                      kk.leaveGroup(msg.to)
                      kt.leaveGroup(msg.to)
                      ks.leaveGroup(msg.to)
-#                     kt.leaveGroup(msg.to)
+                     kc.leaveGroup(msg.to)
                 except:
                      pass
             elif msg.text in ["@left"]:
