@@ -4265,7 +4265,7 @@ def bot(op):
 					time.sleep(0.0001)
 					kk.acceptGroupInvitationByTicket(msg.to,Ticket)
 					time.sleep(0.0001)
-					kc.acceptGroupInvitationByTicket(msg.to,Ticket)
+					kt.acceptGroupInvitationByTicket(msg.to,Ticket)
 					time.sleep(0.0001)
 					ks.acceptGroupInvitationByTicket(msg.to,Ticket)
 					time.sleep(0.0001)
@@ -4300,7 +4300,7 @@ def bot(op):
                 try:
                      ki.leaveGroup(msg.to)
                      kk.leaveGroup(msg.to)
-                     kc.leaveGroup(msg.to)
+                     kt.leaveGroup(msg.to)
                      ks.leaveGroup(msg.to)
 #                     kt.leaveGroup(msg.to)
                 except:
@@ -4333,7 +4333,7 @@ def bot(op):
                            for target in targets:
                                try:
                                  if msg.from_ not in target:
-                                   kl.kickoutFromGroup(msg.to,[target])
+                                   random.choice(KAC).kickoutFromGroup(msg.to,[target])
                                except:
 			           random.choice(KAC).kickoutFromGroup(msg.to,[target])
 								
