@@ -394,6 +394,70 @@ def bot(op):
         if op.type == 0:
             return
         if op.type == 13:
+                if op.param3 in mid:
+                    if op.param2 in Amid:
+                        G = ki.getGroup(op.param1)
+                        G.preventJoinByTicket = False
+                        ki.updateGroup(G)
+                        Ticket = ki.reissueGroupTicket(op.param1)
+                        cl.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        G.preventJoinByTicket = True
+                        ki.updateGroup(G)
+                        Ticket = ki.reissueGroupTicket(op.param1)
+
+                if op.param3 in Amid:
+                    if op.param2 in Bmid:
+                        X = ki2.getGroup(op.param1)
+                        X.preventJoinByTicket = False
+                        ki2.updateGroup(X)
+                        Ti = ki2.reissueGroupTicket(op.param1)
+                        ki.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        X.preventJoinByTicket = True
+                        ki2.updateGroup(X)
+                        Ti = ki2.reissueGroupTicket(op.param1)
+
+                if op.param3 in Bmid:
+                    if op.param2 in Cmid:
+                        X = ki3.getGroup(op.param1)
+                        X.preventJoinByTicket = False
+                        ki3.updateGroup(X)
+                        Ti = ki3.reissueGroupTicket(op.param1)
+                        ki2.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        X.preventJoinByTicket = True
+                        ki3.updateGroup(X)
+                        Ti = ki3.reissueGroupTicket(op.param1)
+                if op.param3 in Cmid:
+                    if op.param2 in Dmid:
+                        X = ki4.getGroup(op.param1)
+                        X.preventJoinByTicket = False
+                        ki4.updateGroup(X)
+                        Ti = ki4.reissueGroupTicket(op.param1)
+                        ki3.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        X.preventJoinByTicket = True
+                        ki4.updateGroup(X)
+                        Ti = ki4.reissueGroupTicket(op.param1)
+                if op.param3 in Dmid:
+                    if op.param2 in Emid:
+                        X = ki4.getGroup(op.param1)
+                        X.preventJoinByTicket = False
+                        ki4.updateGroup(X)
+                        Ti = ki4.reissueGroupTicket(op.param1)
+                        ki5.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        X.preventJoinByTicket = True
+                        ki4.updateGroup(X)
+                        Ti = ki4.reissueGroupTicket(op.param1)
+                if op.param3 in Emid:
+                    if op.param2 in mid:
+                        X = ki5.getGroup(op.param1)
+                        X.preventJoinByTicket = False
+                        ki5.updateGroup(X)
+                        Ti = ki5.reissueGroupTicket(op.param1)
+                        cl.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        X.preventJoinByTicket = True
+                        ki5.updateGroup(X)
+                        Ti = ki5.reissueGroupTicket(op.param1)
+#========================================================================
+        if op.type == 13:
             if mid in op.param3:
                 G = cl.getGroup(op.param1)
                 if wait["autoJoin"] == True:
