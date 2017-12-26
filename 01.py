@@ -1217,7 +1217,7 @@ def bot(op):
             elif msg.text in ["Longname","longname",".ln"]:
             	        cl.sendText(msg.to,"[チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス]")
                         
-            elif msg.text in ["Add on"]:
+            elif msg.text in ["Auto add:on"]:
               if msg.from_ in admin:
                 if wait["autoAdd"] == True:
                     if wait["lang"] == "JP":
@@ -1230,7 +1230,7 @@ def bot(op):
                         cl.sendText(msg.to,"success activated")
                     else:
                         cl.sendText(msg.to,"success activated")
-            elif msg.text in ["Add off"]:
+            elif msg.text in ["Auto add:off"]:
               if msg.from_ in admin:
                 if wait["autoAdd"] == False:
                     if wait["lang"] == "JP":
