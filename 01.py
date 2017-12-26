@@ -1,25 +1,22 @@
 # -*- coding: utf-8 -*-
 #baru
 import LINETCR
-import wikipedia
-import urllib
-import subprocess
-import profile
-import requests
 from LINETCR.lib.curve.ttypes import *
 from datetime import datetime
+from PyDictionary import PyDictionary
+from bs4 import BeautifulSoup
 from mergedict import MergeDict
 from mergedict import ConfigDict
 from gtts import gTTS
 from pyowm import OWM
 from enum import Enum 
+#from django.http import HttpResponse
 from flask import Flask, send_from_directory, redirect as redirect_flask, render_template
 from random import randint
 import time, random, sys, re, os, json
-from bs4 import BeautifulSoup
-from threading import Thread
-from gtts import gTTS
+import subprocess, threading, string,codecs, requests, tweepy, ctypes, urllib, urllib2, wikipedia,cookielib,urllib3
 import urllib3
+import certifi
 import ssl
 import html5lib,shutil
 import subprocess as cmd
@@ -35,6 +32,7 @@ import cStringIO
 import urlparse
 import logging
 import argparse
+#import mimic
 import xml
 import base64
 import ast
@@ -254,50 +252,71 @@ def upload_tempimage(client):
      print("Done")
      print()
 
-     return image
+def yt(query):
+    with requests.session() as s:
+         isi = []
+         if query == "":
+             query = "S1B tanysyz"   
+         s.headers['user-agent'] = 'Mozilla/5.0'
+         url    = 'http://www.youtube.com/results'
+         params = {'search_query': query}
+         r    = s.get(url, params=params)
+         soup = BeautifulSoup(r.content, 'html5lib')
+         for a in soup.select('.yt-lockup-title > a[title]'):
+            if '&list=' not in a['href']:
+                if 'watch?v' in a['href']:
+                    b = a['href'].replace('watch?v=', '')
+                    isi += ['youtu.be' + b]
+         return isi
 
-
-def sendMessage(to, text, contentMetadata={}, contentType=0):
-    mes = Message()
-    mes.to, mes.from_ = to, profile.mid
-    mes.text = text
-    mes.contentType, mes.contentMetadata = contentType, contentMetadata
-    if to not in messageReq:
-        messageReq[to] = -1
-    messageReq[to] += 1
-
-
-def sendMessage(to, text, contentMetadata={}, contentType=0):
-    mes = Message()
-    mes.to, mes.from_ = to, profile.mid
-    mes.text = text
-    mes.contentType, mes.contentMetadata = contentType, contentMetadata
-    if to not in messageReq:
-        messageReq[to] = -1
-    messageReq[to] += 1
+def mention(to, nama):
+	aa = ""
+	bb = ""
+	strt = int(0)
+	akh = int(0)
+	nm = nama
+	print nm
+	for mm in nm:
+		akh = akh + 3
+		aa += """{"S":"""+json.dumps(str(strt))+""","E":"""+json.dumps(str(akh))+""","M","""+json.dumps(mm)+"),"""
+		strt = strt + 4
+		akh = akh + 1
+		bb += "@x \n"
+	aa = (aa[:int(len(aa)-1)])
+	msg = Message()
+	msg.to = to
+	msg.from_ = admin
+	msg.text = bb
+	msg.contentMetadata ={'MENTION':'{"MENTIONEES":['+aa+']}','EMTVER':'4'}
+	print msg
+	try:
+		cl.sendMessage(msg)
+	except Exception as error:
+		print error
 
 def sendImage(self, to_, path):
-      M = Message(to=to_,contentType = 1)
-      M.contentMetadata = None
-      M.contentPreview = None
-      M_id = self.Talk.client.sendMessage(0,M).id
-      files = {
-         'file': open(path, 'rb'),
-      }
-      params = {
-         'name': 'media',
-         'oid': M_id,
-         'size': len(open(path, 'rb').read()),
-         'type': 'image',
-         'ver': '1.0',
-      }
-      data = {
-         'params': json.dumps(params)
-      }
-      r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
-      if r.status_code != 201:
-         raise Exception('Upload image failure.')
-      return True
+        M = Message(to=to_,contentType = 1)
+        M.contentMetadata = True
+        M.contentPreview = True
+        M_id = self._client.sendMessage(M).id
+        files = {
+            'file': open(path, 'rb'),
+        }
+        params = {
+            'name': 'media',
+            'oid': M_id,
+            'size': len(open(path, 'rb').read()),
+            'type': 'image',
+            'ver': '1.0',
+        }
+        data = {
+            'params': json.dumps(params)
+        }
+        r = self._client.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        if r.status_code != 201:
+            raise Exception('Upload image failure.')
+        #r.content
+        return True
 
 def sendImageWithURL(self, to_, url):
       path = '%s/pythonLine-%i.data' % (tempfile.gettempdir(), randint(0, 9))
@@ -311,9 +330,42 @@ def sendImageWithURL(self, to_, url):
          self.sendImage(to_, path)
       except Exception as e:
          raise e
- 
-def post_content(self, urls, data=None, files=None):
-        return self._session.post(urls, headers=self._headers, data=data, files=files)
+
+def sendAudioWithURL(self, to_, url):
+        path = 'pythonLiness.data'
+        r = requests.get(url, stream=True)
+        if r.status_code == 200:
+            with open(path, 'w') as f:
+                shutil.copyfileobj(r.raw, f)
+        else:
+            raise Exception('Download Audio failure.')
+        try:
+            self.sendAudio(to_, path)
+        except Exception as e:
+            raise e
+
+def sendAudio(self, to_, path):
+    M = Message(to=to_,contentType = 3)
+    M.contentMetadata = None
+    M.contentPreview = None 
+    M_id = self.Talk.client.sendMessage(0,M).id 
+    files = {
+            'file': open(path, 'rb'),
+            }
+    params = {
+            'name': 'media',
+            'oid': M_id,
+            'size': len(open(path, 'rb').read()),
+            'type': 'audio',
+            'ver': '1.0',
+            }
+    data = {
+            'params': json.dumps(params)
+            }
+    r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+    if r.status_code != 201:
+        raise Exception('Upload image failure.')
+    return True
 
 def sendMessage(to, text, contentMetadata={}, contentType=0):
     mes = Message()
@@ -324,77 +376,13 @@ def sendMessage(to, text, contentMetadata={}, contentType=0):
         messageReq[to] = -1
     messageReq[to] += 1
 
-def NOTIFIED_READ_MESSAGE(op):
-    try:
-        if op.param1 in wait2['readPoint']:
-            Name = cl.getContact(op.param2).displayName
-            if Name in wait2['readMember'][op.param1]:
-                pass
-            else:
-                wait2['readMember'][op.param1] += "\n9§9" + Name
-                wait2['ROM'][op.param1][op.param2] = "9§9" + Name
-        else:
-            pass
-    except:
-        pass
-        
-def sendAudio(self, to_, path):
-        M = Message(to=to_, text=None, contentType = 3)
-        M_id = self.Talk.client.sendMessage(0,M).id
-        files = {
-            'file': open(path, 'rb'),
-        }
-        params = {
-            'name': 'media',
-            'oid': M_id,
-            'size': len(open(path, 'rb').read()),
-            'type': 'audio',
-            'ver': '1.0',
-        }
-        data = {
-            'params': json.dumps(params)            
-        }       
-
-        r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
-        print r
-        if r.status_code != 201:
-            raise Exception('Upload audio failure.')    
-
-
-def sendAudioWithURL(self, to_, url):
-      path = '%s/pythonLine-%i.data' % (tempfile.gettempdir(), randint(0, 9))
-      r = requests.get(url, stream=True)
-      if r.status_code == 200:
-         with open(path, 'w') as f:
-            shutil.copyfileobj(r.raw, f)
-      else:
-         raise Exception('Download audio failure.')
-      try:
-         self.sendAudio(to_, path)
-      except Exception as e:
-            raise e
-            
-def sendVoice(self, to_, path):
-        M = Message(to=to_, text=None, contentType = 3)
-        M.contentPreview = None
-        M_id = self._client.sendMessage(0,M).id
-        files = {
-            'file': open(path, 'rb'),
-        }
-        params = {
-            'name': 'voice_message',
-            'oid': M_id,
-            'size': len(open(path, 'rb').read()),
-            'type': 'audio',
-            'ver': '1.0',
-        }
-        data = {
-            'params': json.dumps(params)
-        }
-        r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
-        if r.status_code != 201:
-            raise Exception('Upload voice failure.')
-        return True            
+def cms(string, commands): #/XXX, >XXX, ;XXX, ^XXX, %XXX, $XXX...
+    tex = ["+","@","/",">",";","^","%","$","＾","サテラ:","サテラ:","サテラ：","サテラ："]
+    for texX in tex:
+        for command in commands:
+            if string ==command:
+                return True
+    return False
  
 def waktu(secs):
     mins, secs = divmod(secs,60)
