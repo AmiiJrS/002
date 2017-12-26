@@ -1,22 +1,25 @@
 # -*- coding: utf-8 -*-
 #baru
 import LINETCR
+import wikipedia
+import urllib
+import subprocess
+import profile
+import requests
 from LINETCR.lib.curve.ttypes import *
 from datetime import datetime
-from PyDictionary import PyDictionary
-from bs4 import BeautifulSoup
 from mergedict import MergeDict
 from mergedict import ConfigDict
 from gtts import gTTS
 from pyowm import OWM
 from enum import Enum 
-#from django.http import HttpResponse
 from flask import Flask, send_from_directory, redirect as redirect_flask, render_template
 from random import randint
 import time, random, sys, re, os, json
-import subprocess, threading, string,codecs, requests, tweepy, ctypes, urllib, urllib2, wikipedia,cookielib,urllib3
+from bs4 import BeautifulSoup
+from threading import Thread
+from gtts import gTTS
 import urllib3
-import certifi
 import ssl
 import html5lib,shutil
 import subprocess as cmd
@@ -32,33 +35,32 @@ import cStringIO
 import urlparse
 import logging
 import argparse
-#import mimic
 import xml
 import base64
 import ast
 
 cl = LINETCR.LINE()
-cl.login(token="EoY9fBoAUGJK6D1mhU37.i1x7HDA0n4xGT3CpLw0drW.GI2I3CBEV0Hj/WwDZhkwr9LcLKNoAOGlpl3zweU0O4w=")
+cl.login(token="Eoa2Emule0uS3xY3bhF7.i1x7HDA0n4xGT3CpLw0drW.SSUiXfEDRTBZnmPoL8EngeV6bUS/zJHrRyOQPIpdihg=")
 cl.loginResult()
 
 ki = LINETCR.LINE()
-ki.login(token="Eo3aCwo6v9DrBmUESZta.Talcs3tb8aLVd6Vv5xk92G.4MBiFiGiC8Nn8UtElg3W9J/EUMAnVpEobJ7ENbWdSdM=")
+ki.login(token="EomAelrWUcqe5F0Phpr7.KztPtoRqD+dZnu9BdOci5W.J9RFAxL6s4qQXYfAGyJVWtsDbQQp7SfhQQQjazuOt5w=")
 ki.loginResult()
 
 ki2 = LINETCR.LINE()
-ki2.login(token="EohZMX8z5rxoqZKAWN03.Af2Tn/2TNeIF5TI42tFyqW.yUMvmD/QwCOZ11oBemb0O/pohKBJSTO9xV7gOR22YG0=")
+ki2.login(token="Eogo9jwHSiMPhIrVslCa.0DQA3PShrbWgT5lOHWAMgG.UCI3RqAereVj+ExcCpNenkUWu2fi2zdCzQTfNoNYliU=")
 ki2.loginResult()
 
 ki3 = LINETCR.LINE()
-ki3.login(token="Eo9e0Od2gZapQrmePdF9.hQAEnSMhKVwa4RpxrJHtIq.ts4qamUK1zP7x/p5CZx9ruOXTq+IsKg8f39crvUZcHw=")
+ki3.login(token="EoKOLJ9K8AArJiCDSXa8.KvrwIbAFsH4InJiPMauyIa.KyOw5cDVGF/XQTyzYe6k/b/svS7CbCfyL31nlWn2V/4=")
 ki3.loginResult()
 
 ki4 = LINETCR.LINE()
-ki4.login(token="EoRKcNDuL0mLxqF5CzX1.JfCtHOqQfDhIFCfpOIzoeq.unqcoS5yfUZybR1f6X78jpuZSIC6JCcE9a8k7aY8M58=")
+ki4.login(token="Eo9DLE8NItRaIfU89Qua.vI6a/Sp2BfD6vi9/i+5usG.EYbpKYHpHvGgJcckhcTqLGwaoUIzwryZWm0tqqfP4k8=")
 ki4.loginResult()
 
 ki5 = LINETCR.LINE()
-ki5.login(token="Eo0pjf2GI7cilXLdhrl5.zaE6e6IBtOrrPYccrmUXrq.UPzLNYlAINno5yA+lxJyblWEowwvFtaZH3hax9mPBIU=")
+ki5.login(token="Eoq1EDwUFCgkGwAV1NI5.wfLEyZSC0Qila8uXRrYvfq.njHkDDnSTFPMKfYOuvgIJPxEjJY0VOy2x4wURyEX1mQ=")
 ki5.loginResult()
 
 print "🛡️ᴀᴍɪɪ ʟᴏɢɪɴ🛡️"
@@ -213,7 +215,7 @@ wait2 = {
     'readPoint':{},
     'readMember':{},
     'setTime':{},
-    "ricoinvite":{},
+    "winvite":{},
     'ROM':{},
     }
     
@@ -252,71 +254,50 @@ def upload_tempimage(client):
      print("Done")
      print()
 
-def yt(query):
-    with requests.session() as s:
-         isi = []
-         if query == "":
-             query = "S1B tanysyz"   
-         s.headers['user-agent'] = 'Mozilla/5.0'
-         url    = 'http://www.youtube.com/results'
-         params = {'search_query': query}
-         r    = s.get(url, params=params)
-         soup = BeautifulSoup(r.content, 'html5lib')
-         for a in soup.select('.yt-lockup-title > a[title]'):
-            if '&list=' not in a['href']:
-                if 'watch?v' in a['href']:
-                    b = a['href'].replace('watch?v=', '')
-                    isi += ['youtu.be' + b]
-         return isi
+     return image
 
-def mention(to, nama):
-	aa = ""
-	bb = ""
-	strt = int(0)
-	akh = int(0)
-	nm = nama
-	print nm
-	for mm in nm:
-		akh = akh + 3
-		aa += """{"S":"""+json.dumps(str(strt))+""","E":"""+json.dumps(str(akh))+""","M","""+json.dumps(mm)+"),"""
-		strt = strt + 4
-		akh = akh + 1
-		bb += "@x \n"
-	aa = (aa[:int(len(aa)-1)])
-	msg = Message()
-	msg.to = to
-	msg.from_ = admin
-	msg.text = bb
-	msg.contentMetadata ={'MENTION':'{"MENTIONEES":['+aa+']}','EMTVER':'4'}
-	print msg
-	try:
-		cl.sendMessage(msg)
-	except Exception as error:
-		print error
+
+def sendMessage(to, text, contentMetadata={}, contentType=0):
+    mes = Message()
+    mes.to, mes.from_ = to, profile.mid
+    mes.text = text
+    mes.contentType, mes.contentMetadata = contentType, contentMetadata
+    if to not in messageReq:
+        messageReq[to] = -1
+    messageReq[to] += 1
+
+
+def sendMessage(to, text, contentMetadata={}, contentType=0):
+    mes = Message()
+    mes.to, mes.from_ = to, profile.mid
+    mes.text = text
+    mes.contentType, mes.contentMetadata = contentType, contentMetadata
+    if to not in messageReq:
+        messageReq[to] = -1
+    messageReq[to] += 1
 
 def sendImage(self, to_, path):
-        M = Message(to=to_,contentType = 1)
-        M.contentMetadata = True
-        M.contentPreview = True
-        M_id = self._client.sendMessage(M).id
-        files = {
-            'file': open(path, 'rb'),
-        }
-        params = {
-            'name': 'media',
-            'oid': M_id,
-            'size': len(open(path, 'rb').read()),
-            'type': 'image',
-            'ver': '1.0',
-        }
-        data = {
-            'params': json.dumps(params)
-        }
-        r = self._client.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
-        if r.status_code != 201:
-            raise Exception('Upload image failure.')
-        #r.content
-        return True
+      M = Message(to=to_,contentType = 1)
+      M.contentMetadata = None
+      M.contentPreview = None
+      M_id = self.Talk.client.sendMessage(0,M).id
+      files = {
+         'file': open(path, 'rb'),
+      }
+      params = {
+         'name': 'media',
+         'oid': M_id,
+         'size': len(open(path, 'rb').read()),
+         'type': 'image',
+         'ver': '1.0',
+      }
+      data = {
+         'params': json.dumps(params)
+      }
+      r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+      if r.status_code != 201:
+         raise Exception('Upload image failure.')
+      return True
 
 def sendImageWithURL(self, to_, url):
       path = '%s/pythonLine-%i.data' % (tempfile.gettempdir(), randint(0, 9))
@@ -330,42 +311,9 @@ def sendImageWithURL(self, to_, url):
          self.sendImage(to_, path)
       except Exception as e:
          raise e
-
-def sendAudioWithURL(self, to_, url):
-        path = 'pythonLiness.data'
-        r = requests.get(url, stream=True)
-        if r.status_code == 200:
-            with open(path, 'w') as f:
-                shutil.copyfileobj(r.raw, f)
-        else:
-            raise Exception('Download Audio failure.')
-        try:
-            self.sendAudio(to_, path)
-        except Exception as e:
-            raise e
-
-def sendAudio(self, to_, path):
-    M = Message(to=to_,contentType = 3)
-    M.contentMetadata = None
-    M.contentPreview = None 
-    M_id = self.Talk.client.sendMessage(0,M).id 
-    files = {
-            'file': open(path, 'rb'),
-            }
-    params = {
-            'name': 'media',
-            'oid': M_id,
-            'size': len(open(path, 'rb').read()),
-            'type': 'audio',
-            'ver': '1.0',
-            }
-    data = {
-            'params': json.dumps(params)
-            }
-    r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
-    if r.status_code != 201:
-        raise Exception('Upload image failure.')
-    return True
+ 
+def post_content(self, urls, data=None, files=None):
+        return self._session.post(urls, headers=self._headers, data=data, files=files)
 
 def sendMessage(to, text, contentMetadata={}, contentType=0):
     mes = Message()
@@ -376,13 +324,77 @@ def sendMessage(to, text, contentMetadata={}, contentType=0):
         messageReq[to] = -1
     messageReq[to] += 1
 
-def cms(string, commands): #/XXX, >XXX, ;XXX, ^XXX, %XXX, $XXX...
-    tex = ["+","@","/",">",";","^","%","$","＾","サテラ:","サテラ:","サテラ：","サテラ："]
-    for texX in tex:
-        for command in commands:
-            if string ==command:
-                return True
-    return False
+def NOTIFIED_READ_MESSAGE(op):
+    try:
+        if op.param1 in wait2['readPoint']:
+            Name = cl.getContact(op.param2).displayName
+            if Name in wait2['readMember'][op.param1]:
+                pass
+            else:
+                wait2['readMember'][op.param1] += "\n9§9" + Name
+                wait2['ROM'][op.param1][op.param2] = "9§9" + Name
+        else:
+            pass
+    except:
+        pass
+        
+def sendAudio(self, to_, path):
+        M = Message(to=to_, text=None, contentType = 3)
+        M_id = self.Talk.client.sendMessage(0,M).id
+        files = {
+            'file': open(path, 'rb'),
+        }
+        params = {
+            'name': 'media',
+            'oid': M_id,
+            'size': len(open(path, 'rb').read()),
+            'type': 'audio',
+            'ver': '1.0',
+        }
+        data = {
+            'params': json.dumps(params)            
+        }       
+
+        r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        print r
+        if r.status_code != 201:
+            raise Exception('Upload audio failure.')    
+
+
+def sendAudioWithURL(self, to_, url):
+      path = '%s/pythonLine-%i.data' % (tempfile.gettempdir(), randint(0, 9))
+      r = requests.get(url, stream=True)
+      if r.status_code == 200:
+         with open(path, 'w') as f:
+            shutil.copyfileobj(r.raw, f)
+      else:
+         raise Exception('Download audio failure.')
+      try:
+         self.sendAudio(to_, path)
+      except Exception as e:
+            raise e
+            
+def sendVoice(self, to_, path):
+        M = Message(to=to_, text=None, contentType = 3)
+        M.contentPreview = None
+        M_id = self._client.sendMessage(0,M).id
+        files = {
+            'file': open(path, 'rb'),
+        }
+        params = {
+            'name': 'voice_message',
+            'oid': M_id,
+            'size': len(open(path, 'rb').read()),
+            'type': 'audio',
+            'ver': '1.0',
+        }
+        data = {
+            'params': json.dumps(params)
+        }
+        r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        if r.status_code != 201:
+            raise Exception('Upload voice failure.')
+        return True            
  
 def waktu(secs):
     mins, secs = divmod(secs,60)
@@ -448,17 +460,11 @@ def bot(op):
                 cl.like(url[25:58], url[66:], likeType=1003)
             if op.type == 26:
                 msg=op.message
-                if "@"+cl.getProfile().displayName in msg.text:
-                        if wait["tag"] == True:
-                            tanya = msg.text.replace("@"+cl.getProfile().displayName,"")
-                            jawab = ("Jangan Tag Si "+cl.getProfile().displayName+"!!","Jangan tag si "+cl.getProfile().displayName+" dia masih tidur","Kenapa sih tag "+cl.getProfile().displayName+" dia lagi kojom tauu.!!!")
-                            jawaban = random.choice(jawab)
-                            cl.sendText(msg.to,jawaban)
                 if "MENTION" in msg.contentMetadata.keys() != None:
                     if wait ["tag"] == True:
                           contact = cl.getContact(msg.from_)
                           cName = contact.displayName
-                          balas = ["Jangan Tag Si "+cl.getProfile().displayName+"!!","Berisik jangan tag si "+cl.getProfile().displayName+" dia masih tidur","Kenapa tag si "+cl.getProfile().displayName+" dia lagi kojom"]
+                          balas = ["Jangan Tag Si "+cl.getProfile().displayName+"!!","Jangan tag si "+cl.getProfile().displayName+" dia masih tidur","Kenapa sih tag "+cl.getProfile().displayName+" dia lagi kojom tauu.!!!"]
                           ret_ = " " + random.choice(balas)
                           name = re.findall(r'@(\w+)', msg.text)
                           mention = ast.literal_eval(msg.contentMetadata['MENTION'])
@@ -471,7 +477,7 @@ def bot(op):
         if op.type == 25:
             msg = op.message
             if msg.contentType == 13:
-            	if wait["ricoinvite"] == True:
+            	if wait["winvite"] == True:
                      if msg.from_ in admin:
                          _name = msg.contentMetadata["displayName"]
                          invite = msg.contentMetadata["mid"]
@@ -496,11 +502,11 @@ def bot(op):
                                      random.choice(KAC).findAndAddContactsByMid(target)
                                      random.choice(KAC).inviteIntoGroup(msg.to,[target])
                                      random.choice(KAC).sendText(msg.to,"Sukses menginvite gembel ini😆: \n➡ " + _name)
-                                     wait2["ricoinvite"] = False
+                                     wait2["winvite"] = False
                                      break                              
                                  except:             
-                                          cl.sendText(msg.to,"Your Account Limit Invitation.")
-                                          wait2["ricoinvite"] = False
+                                          cl.sendText(msg.to,"Done Invite : \n➡" + _name)
+                                          wait2["winvite"] = False
                                           break
             if msg.contentType == 13:
                 if wait["wblack"] == True:
@@ -651,12 +657,6 @@ def bot(op):
                                     'MSGTPL': '2'}
                 msg.text = None
                 cl.sendMessage(msg)
-            elif "@"+cl.getProfile().displayName in msg.text:
-               if wait["tag"] == True:
-                tanya = msg.text.replace("@"+cl.getProfile().displayName,"")
-                jawab = ("Jgn Tag Si "+cl.getProfile().displayName+"!!","Berisik jgn tag si "+cl.getProfile().displayName+" dia masih tidur")
-                jawaban = random.choice(jawab)
-                cl.sendText(msg.to,jawaban)
             elif msg.text in ["Gift","gift"]:
                 msg.contentType = 9
                 msg.contentMetadata={'PRDID': '3b92ccf5-54d3-4765-848f-c9ffdc1da020',
@@ -727,9 +727,9 @@ def bot(op):
             elif "tgb5 mid" == msg.text:
                 cl.sendText(msg.to,ki5mid)
                 
-            elif msg.text in ["Runtime"]:
+            elif msg.text.lower() == 'runtime':
                 eltime = time.time() - mulai
-                dan = "ʙᴏᴛ ʜᴀᴠᴇ ʙᴇᴇɴ ʀᴜɴɴɪɴɢ ғᴏʀ :\n " +waktu(eltime)+ " ᴛɪᴍᴇ "
+                dan = "Bot sudah berjalan selama " + waktu(eltime)
                 cl.sendText(msg.to,dan)
      
             elif "All mid" == msg.text:
@@ -1229,30 +1229,32 @@ def bot(op):
             elif msg.text in ["Longname","longname",".ln"]:
             	        cl.sendText(msg.to,"[チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス][チェックボックス]")
                         
-            elif msg.text in ["Add on","Add auto on"]:
+            elif msg.text in ["Add on"]:
+              if msg.from_ in admin:
                 if wait["autoAdd"] == True:
                     if wait["lang"] == "JP":
-                        cl.sendText(msg.to,"Already On")
+                        cl.sendText(msg.to,"success activated")
                     else:
-                        cl.sendText(msg.to,"Already On👈")
+                        cl.sendText(msg.to,"success activated")
                 else:
                     wait["autoAdd"] = True
                     if wait["lang"] == "JP":
-                        cl.sendText(msg.to,"Already On👈")
+                        cl.sendText(msg.to,"success activated")
                     else:
-                        cl.sendText(msg.to,"Already On👈")
-            elif msg.text in ["Add off","Add auto off"]:
+                        cl.sendText(msg.to,"success activated")
+            elif msg.text in ["Add off"]:
+              if msg.from_ in admin:
                 if wait["autoAdd"] == False:
                     if wait["lang"] == "JP":
-                        cl.sendText(msg.to,"Hal ini sudah off👈")
+                        cl.sendText(msg.to,"success unactivated")
                     else:
-                        cl.sendText(msg.to,"Hal ini sudah dimatikan👈")
+                        cl.sendText(msg.to,"success unactivated")
                 else:
                     wait["autoAdd"] = False
                     if wait["lang"] == "JP":
-                        cl.sendText(msg.to,"Already Off👈")
+                        cl.sendText(msg.to,"success unactivated")
                     else:
-                        cl.sendText(msg.to,"Untuk mengaktifkan-off👈")
+                        cl.sendText(msg.to,"success unactivated")
             elif "Msg set: " in msg.text:
                 wait["message"] = msg.text.replace("Msg set: ","")
                 cl.sendText(msg.to,"We changed the message👈")
@@ -1838,7 +1840,7 @@ def bot(op):
                                 ki4.sendText(msg,to,"ɢʀᴏᴜᴘ ᴅɪʙᴇʀsɪʜᴋᴀɴ")
                     
 #-------------TagALL Start---------------#
-            elif msg.text in ["***"]:
+            elif msg.text in ["***","!!!"]:
                 group = cl.getGroup(msg.to)
                 nama = [contact.mid for contact in group.members]
                 cb = ""
@@ -1859,66 +1861,7 @@ def bot(op):
                     cl.sendMessage(msg)
                 except Exception as error:
                     print error
-                    
-            elif msg.text.lower() in ["!!!"]:
-              if msg.from_ in admin:
-                group = cl.getGroup(msg.to)
-                nama = [contact.mid for contact in group.members]
-                nm1, nm2, nm3, nm4, nm5, jml = [], [], [], [], [], len(nama)
-                if jml <= 100:
-                    mention(msg.to, nama)
-                    if jml > 100 and jml < 200:
-                        for i in range(0, 100):
-                            nm1 += [nama[i]]
-                    mention(msg.to, nm1)
-                    for j in range(101, len(nama)):
-                        nm2 += [nama[j]]
-                    mention(msg.to, nm2)
-                if jml > 200 and jml < 300:
-                    for i in range(0, 100):
-                        nm1 += [nama[i]]
-                    mention(msg.to, nm1)
-                    for j in range(101, 200):
-                        nm2 += [nama[j]]
-                    mention(msg.to, nm2)
-                    for k in range(201, len(nama)):
-                        nm3 += [nama[k]]
-                    mention(msg.to, nm3)
-                if jml > 300 and jml < 400:
-                    for i in range(0, 100):
-                        nm1 += [nama[i]]
-                    mention(msg.to, nm1)
-                    for j in range(101, 200):
-                        nm2 += [nama[j]]
-                    mention(msg.to, nm2)
-                    for k in range(201, 300):
-                        nm3 += [nama[k]]
-                    mention(msg.to, nm3)
-                    for l in range(301, len(nama)):
-                        nm4 += [nama[l]]
-                    mention(msg.to, nm4)
-                if jml > 400 and jml < 500:
-                    for i in range(0, 100):
-                        nm1 += [nama[i]]
-                    mention(msg.to, nm1)
-                    for j in range(101, 200):
-                        nm2 += [nama[j]]
-                    mention(msg.to, nm2)
-                    for k in range(201, 300):
-                        nm3 += [nama[k]]
-                    mention(msg.to, nm3)
-                    for l in range(301, 400):
-                        nm4 += [nama[l]]
-                    mention(msg.to, nm4)
-                    for h in range(401, len(nama)):
-                        nm5 += [nama[h]]
-                    mention(msg.to, nm5)
-                if jml > 500:
-                    cl.sendText(msg.to,'Member melebihi batas.')
-                    cnt = Message()
-                    cnt.text = "Done : " + str(jml) +  " Members"
-                    cnt.to = msg.to
-                    cl.sendMessage(cnt)           
+
 #-----------------------------------------------
     #-------------TagALL Finish-------------#           
 
@@ -2355,12 +2298,13 @@ def bot(op):
                     else:
                         cl.sendText(msg.to, "Out Of Range!")
 
-            elif msg.text in ["Sp","Speed","Desah"]:
+            elif msg.text in ["Sp","Speed"]:
+              if msg.from_ in admin:
                 cl.sendText(msg.to, "Pᵉˡᵃⁿ-Pᵉˡᵃⁿ Sᵃʸᵃⁿᵍ...😃")
                 start = time.time()
-                time.sleep(0.00)
+                time.sleep(0.04)
                 elapsed_time = time.time() - start
-                cl.sendText(msg.to, "%sseconds" % (elapsed_time))  
+                cl.sendText(msg.to, "%sseconds" % (elapsed_time))    
                 print "[Command]Speed executed"
 
             elif msg.text.lower() == 'me':
@@ -2412,37 +2356,43 @@ def bot(op):
                 else:
                     cl.sendText(msg.to,"He declined all invitations")
 
-            elif msg.text == "Ginfo":
-                    group = cl.getGroup(msg.to)
-                    try:
-                        gCreator = group.creator.displayName
-                    except:
-                        gCreator = "Error"
-                    md = "[Nama Grup : ]\n" + group.name + "\n\n[Id Grup : ]\n" + group.id + "\n\n[Pembuat Grup :]\n" + gCreator + "\n\n[Gambar Grup : ]\nhttp://dl.profile.line-cdn.net/" + group.pictureStatus
-                    if group.preventJoinByTicket is False: md += "\n\nKode Url : Diizinkan"
-                    else: md += "\n\nKode Url : Diblokir"
-                    if group.invitee is None: md += "\nJumlah Member : " + str(len(group.members)) + " Orang" + "\nUndangan Yang Belum Diterima : 0 Orang"
-                    else: md += "\nJumlah Member : " + str(len(group.members)) + " Orang" + "\nUndangan Yang Belum Diterima : " + str(len(group.invitee)) + " Orang"
-                    cl.sendText(msg.to,md)
-            
-            elif '.ms ' in msg.text.lower():
-            	cl.sendText(msg.to,"Tunggu...")
+            elif msg.text.lower() == 'ginfo':
+              if msg.from_ in admin:
+                ginfo = cl.getGroup(msg.to)
                 try:
-                    songname = msg.text.lower().replace('music ','')
-                    params = {'songname': songname}
-                    r = requests.get('http://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
-                    data = r.text
-                    data = json.loads(data)
-                    for song in data:
-                        hasil = 'Ini Dia Hasilnya\n'
-                        hasil += 'Judul : ' + song[0]
-                        hasil += '\nDurasi : ' + song[1]
-                        hasil += '\nLink Download : ' + song[4]
-                        cl.sendText(msg.to, hasil)
-                        cl.sendText(msg.to, "Tunggu VN Musiknya...")
-                        cl.sendAudioWithURL(msg.to, song[4])
-		except Exception as njer:
-		        cl.sendText(msg.to, str(njer))
+                    gCreator = ginfo.creator.displayName
+                except:
+                    gCreator = "Error"
+                if wait["lang"] == "JP":
+                    if ginfo.invitee is None:
+                        sinvitee = "0"
+                    else:
+                        sinvitee = str(len(ginfo.invitee))
+                msg.contentType = 13
+                msg.contentMetadata = {'mid': ginfo.creator.mid}
+                cl.sendText(msg.to,"[display name]\n" + str(ginfo.name) + "\n[Group Id]\n" + msg.to + "\n\n[Group Creator]\n" + gCreator + "\n\nmembers:" + str(len(ginfo.members)) + "\nInvitation:" + sinvitee + "")
+                cl.sendMessage(msg)
+            
+            elif ".ms " in msg.text.lower():
+                songname = msg.text.replace(".ms ","")
+                params = {"songname":songname}
+                r = requests.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
+                data = r.text
+                data = json.loads(data)
+                for song in data:
+                    cl.sendText(msg.to,"Judul : " + song[0] + "\nDurasi : " + song[1])
+                    cl.sendText(msg.to,song[4])
+                    print "[Command] Lagu"
+                    
+            elif ".lirik " in msg.text.lower():
+                songname = msg.text.replace("/lirik ","")
+                params = {"songname":songname}
+                r = requests.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
+                data = r.text
+                data = json.loads(data)
+                for song in data:
+                    cl.sendText(msg.to,song[5])
+                    print "[Command] Lirik"
             
             #--------------------------------- YOUTUBE START ----------------------------------#
             elif ".yt " in msg.text:
@@ -2470,37 +2420,37 @@ def bot(op):
 
             elif msg.text in ["Invite:on"]:
               if msg.from_ in admin:
-                wait["ricoinvite"] = True
+                wait["winvite"] = True
                 random.choice(KAC).sendText(msg.to,"Mana kontaknya?")
 
             elif msg.text in ["Me invite:on"]:
               if msg.from_ in admin:
-                wait["ricoinvite"] = True
+                wait["winvite"] = True
                 cl.sendText(msg.to,"Mana kontaknya?")
 
             elif msg.text in ["Invite:on1"]:
               if msg.from_ in admin:
-                 wait["ricoinvite"] = True
+                 wait["winvite"] = True
                  ki.sendText(msg.to,"send contact")
 
             elif msg.text in ["Invite:on2"]:
               if msg.from_ in admin:
-                 wait["ricoinvite"] = True
+                 wait["winvite"] = True
                  ki2.sendText(msg.to,"send contact")
 
             elif msg.text in ["Invite:on3"]:
               if msg.from_ in admin:
-                 wait["ricoinvite"] = True
+                 wait["winvite"] = True
                  ki3.sendText(msg.to,"send contact")
 
             elif msg.text in ["Invite:on4"]:
               if msg.from_ in admin:
-                 wait["ricoinvite"] = True
+                 wait["winvite"] = True
                  ki4.sendText(msg.to,"send contact")
 
             elif msg.text in ["Invite:on5"]:
               if msg.from_ in admin:
-                 wait["ricoinvite"] = True
+                 wait["winvite"] = True
                  ki5.sendText(msg.to,"send contact")
                 
             elif ("Cek " in msg.text):
@@ -2644,12 +2594,17 @@ def bot(op):
                     else:
                         cl.sendText(msg.to,"Done 😉")
 #-----------------------------------------------------------#
-            elif "#leave" in msg.text:
-                try:
-                    import sys
-                    sys.exit()
-                except:
-                    pass
+            elif ".tm" in msg.text:
+	    	       wait2['setTime'][msg.to] = datetime.today().strftime('TANGGAL : %Y-%m-%d \nHARI : %A \nJAM : %H:%M:%S')
+	               cl.sendText(msg.to, "         Waktu/Tanggal\n\n" + (wait2['setTime'][msg.to]))
+#-----------------------------------------------------------#
+            elif "/apakah " in msg.text:
+                  tanya = msg.text.replace("/apakah ","")
+                  jawab = ("ya","tidak","Bisa jadi","mungkin")
+                  jawaban = random.choice(jawab)
+                  tts = gTTS(text=jawaban, lang='id')
+                  tts.save('tts.mp3')
+                  cl.sendAudio(msg.to,'tts.mp3')
 #-----------------------------------------------------------#
             elif msg.text.lower() == 'respon':
                 profile = ki.getProfile()
@@ -3437,9 +3392,9 @@ def nameUpdate():
             time.sleep(600)
         except:
             pass
-thread2 = threading.Thread(target=nameUpdate)
-thread2.daemon = True
-thread2.start()
+#thread2 = threading.Thread(target=nameUpdate)
+#thread2.daemon = True
+#thread2.start()
 #-------------------------------------------------------------------------------------------#
 #def autolike():
 #     for zx in range(0,50):
