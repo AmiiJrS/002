@@ -4456,9 +4456,9 @@ def autoSta():
                 sys.exit(0)
             else:
                 pass
-thread1 = threading.Thread(target=autoSta)
-thread1.daemon = True
-thread1.start()
+#thread1 = threading.Thread(target=autoSta)
+#thread1.daemon = True
+#thread1.start()
 def a2():
     now2 = datetime.now()
     nowT = datetime.strftime(now2,"%M")
@@ -4481,9 +4481,9 @@ def nameUpdate():
             time.sleep(600)
         except:
             pass
-thread2 = threading.Thread(target=nameUpdate)
-thread2.daemon = True
-thread2.start()
+#thread2 = threading.Thread(target=nameUpdate)
+#thread2.daemon = True
+#thread2.start()
     
 while True:
     try:
