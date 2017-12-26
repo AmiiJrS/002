@@ -727,9 +727,9 @@ def bot(op):
             elif "tgb5 mid" == msg.text:
                 cl.sendText(msg.to,ki5mid)
                 
-            elif msg.text.lower() == 'runtime':
+            elif msg.text in ["Runtime"]:
                 eltime = time.time() - mulai
-                dan = "Bot sudah berjalan selama " + waktu(eltime)
+                dan = "ʙᴏᴛ ʜᴀᴠᴇ ʙᴇᴇɴ ʀᴜɴɴɪɴɢ ғᴏʀ :\n " +waktu(eltime)+ " ᴛɪᴍᴇ "
                 cl.sendText(msg.to,dan)
      
             elif "All mid" == msg.text:
