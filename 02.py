@@ -19,7 +19,7 @@ import urllib3
 import certifi
 import ssl
 import html5lib,shutil
-import subprocess as cmd
+#import subprocess as cmd
 import csv
 import os
 import errno
@@ -39,31 +39,31 @@ import ast
 
 #ADMIN 
 cl = LINETCR.LINE()
-cl.login(token="EoRujFCxZ21l3pcRnLXe.hJ6OS27ZxlCSZFmMi++wlG.P3TGJLxWTzzzUGlNisSDsMYfdikESMukxDoGeLBd0dc=")
+cl.login(token="Eo9IfYbuIRuk6P7jGWne.hJ6OS27ZxlCSZFmMi++wlG.rXtQrFH/RTigZ4sWRxvaZ0eb4tM0B43N0A7SKAneRN4=")
 
 #DTB1
 kt = LINETCR.LINE()
-kt.login(token="EoO9G6hGWCS2nfvODWp9.BnT5+wuIUZDBwsJtpBtkYq.oEKByA3RyVA+WCNmf/FOrwVeGHFeQPxosRK8GnJlj9Q=")
+kt.login(token="EoDp3NPWL6lVuG13GeV9.BnT5+wuIUZDBwsJtpBtkYq.Qi5+BaHsLpK31XgOOdRx2XlFapn2SGHcpWPJ+m7HheU=")
 
 #DTB2
 ks = LINETCR.LINE()
-ks.login(token="EohEm7tSzy3n3OQiD5if.w8WjQ5YYUi8MX/mowRpFZW.EJdHphnpkrTfIdl/SKhReGdw3kKOkzHwszkvlXKUXkQ=")
+ks.login(token="EoISw9sU7AExbLfAwtGf.w8WjQ5YYUi8MX/mowRpFZW.IXeSu3hA+57SFW612bxOx8MqgNssKYgrDLDyDiTbB9Q=")
 
 #DTB3
 ki = LINETCR.LINE()
-ki.login(token="EoiMUhPrLqbmKUCOCAi1.ym/heHbxRZmza3vuhZzp8q.jYEkV2W+//lJ5FiMjy4HgmPj2jLSecNpxtaJQi25FbM=")
+ki.login(token="EoIcxQCgCpKK8Evs2r51.ym/heHbxRZmza3vuhZzp8q.LEhIzdnbRP4f9NJLNCoFqhteR4xMOOEUDi89ujXXG7o=")
 
 #DTB4
 kk = LINETCR.LINE()
-kk.login(token="EopRFGotHmZTMOWOkl1e.6v6loJKDOdhcGmohufs+3G.HQeFFlKJXHIAoGwtI3navxEVJl1v31SyfBkPw/SSjj8=")
+kk.login(token="EowMHzOaAaR2R7O0Dvke.6v6loJKDOdhcGmohufs+3G.BWkAG7wyKAkGxILbg1JlXh6inSufzM+Q3QUKJtsR2XQ=")
 
 #iridessa
 kc = LINETCR.LINE()
-kc.login(token="Eo0E9inChVbAiKhxwhd4.NY1SLGUcS9sBsyVPCsExja.GT6qoWfzvKjyTLIn+CL/VzWhqwppdba5mlTbzMh2pOY=")
+kc.login(token="EoAwyJ4omL3ExE2Rot14.NY1SLGUcS9sBsyVPCsExja.tURScD/KfP3dAiUorw5UHAT4FZEEkF52oB9BO9Ku6wo=")
 
 #DTB6 kicker ghost
 kl = LINETCR.LINE()
-kl.login(token="EoV25cmVzFekEmwJy2t7.pz/yHO8eziJsV+m4m9sR9W.cW0uTbGBvWGtjc6y7RjS7WKIrAB4BQK64klUTQI2F2A=")
+kl.login(token="EoFYdQsxHxbLfGueHae7.pz/yHO8eziJsV+m4m9sR9W.ZbU+Db6W+xX+U3pDzeYVZdoeHRUmKwvZ3d592Xs1Djc=")
 
 print "✍D̴E̴D̴I̴ T̴E̴A̴M̴B̴O̴T̴✈"
 reload(sys)
@@ -3059,14 +3059,15 @@ def bot(op):
                     cl.sendText(msg.to, str (e))
 
 #===============================================
-            elif msg.text in ["debug speed","Debug speed"]:
+            elif msg.text in ["Sp","Speed","Desah"]:
               if msg.from_ in admin:
-                cl.sendText(msg.to, "Measuring...")
+                cl.sendText(msg.to, "Pᵉˡᵃⁿ-Pᵉˡᵃⁿ Sᵃʸᵃⁿᵍ...😃")
                 start = time.time()
-                time.sleep(0.0001)
+                time.sleep(0.05)
                 elapsed_time = time.time() - start
                 cl.sendText(msg.to, "%sseconds" % (elapsed_time))    
-                print "[Command]Speed palsu executed"
+		cl.sendText(msg.to, "Tᵘʰ ᵏᵃᵃⁿ Cʳᵒᵗ ˢʸᵍ.. 😃")                                      
+                print "[Command]Speed executed"
            
             elif "Blacklist all" in msg.text:
               if msg.from_ in admin:
@@ -3260,13 +3261,6 @@ def bot(op):
                                         cl.uldateGroup(gs)
                                         gs.preventJoinByTicket(gs)
                                         cl.updateGroup(gs)
-            elif msg.text in ["Sp","Speed","Desah"]:
-                start = time.time()
-                print("Speed")
-                elapsed_time = time.time() - start
-                cl.sendText(msg.to, "Pᵉˡᵃⁿ-Pᵉˡᵃⁿ Sᵃʸᵃⁿᵍ...😃")
-                cl.sendText(msg.to, "%sseconds" % (elapsed_time))  
-                cl.sendText(msg.to, "Tᵘʰ ᵏᵃᵃⁿ Cʳᵒᵗ ˢʸᵍ.. 😃")                                      
 
             elif msg.text in ["Sp Bot","Speed Bot","Desah1"]:
                 start = time.time()
