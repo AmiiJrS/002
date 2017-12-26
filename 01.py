@@ -2358,7 +2358,7 @@ def bot(op):
             elif msg.text in ["Sp","Speed","Desah"]:
                 cl.sendText(msg.to, "Pᵉˡᵃⁿ-Pᵉˡᵃⁿ Sᵃʸᵃⁿᵍ...😃")
                 start = time.time()
-                time.sleep(0.03)
+                time.sleep(0.00)
                 elapsed_time = time.time() - start
                 cl.sendText(msg.to, "%sseconds" % (elapsed_time))  
                 print "[Command]Speed executed"
