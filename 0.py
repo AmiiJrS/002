@@ -80,7 +80,7 @@ ki3mid = ki3.getProfile().mid
 ki4mid = ki4.getProfile().mid
 ki5mid = ki5.getProfile().mid
 Bots = [mid,kimid,ki2mid,ki3mid,ki4mid,ki5mid,"u78e5efff85bf97393cc2c4b8ecf93d25"]
-admsa = "u78e5efff85bf97393cc2c4b8ecf93d257"
+admsa = "u78e5efff85bf97393cc2c4b8ecf93d25"
 admin = "u78e5efff85bf97393cc2c4b8ecf93d25"
 
 wait = {
