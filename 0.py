@@ -79,9 +79,9 @@ ki2mid = ki2.getProfile().mid
 ki3mid = ki3.getProfile().mid
 ki4mid = ki4.getProfile().mid
 ki5mid = ki5.getProfile().mid
-Bots = [mid,kimid,ki2mid,ki3mid,ki4mid,ki5mid,"u2355fb85d6b43785e0b7770f956d0347"]
-admsa = "u2355fb85d6b43785e0b7770f956d0347"
-admin = "u2355fb85d6b43785e0b7770f956d0347"
+Bots = [mid,kimid,ki2mid,ki3mid,ki4mid,ki5mid,"u78e5efff85bf97393cc2c4b8ecf93d25"]
+admsa = "u78e5efff85bf97393cc2c4b8ecf93d257"
+admin = "u78e5efff85bf97393cc2c4b8ecf93d25"
 
 wait = {
     'contact':False,
